@@ -1,0 +1,37 @@
+# docker-compose.gpu.yml
+# Habilita la aceleracion por GPU NVIDIA para el backend (self-host / BYOK).
+#
+# Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.gpu.yml up --build
+#
+# Requisitos:
+#   - GPU NVIDIA con driver reciente (incluye Blackwell: RTX 50xx).
+#   - Docker Desktop con backend WSL2 (el soporte de GPU viene integrado).
+#   - Comprobar que Docker ve la GPU:
+#       docker run --rm --gpus all nvidia/cuda:12.9.0-base-ubuntu22.04 nvidia-smi
+#
+# No modifica el docker-compose.yml base: sin este override, todo corre en CPU.
+services:
+  backend:
+    build:
+      context: .
+      args:
+        GPU: "1"
+    environment:
+      # Transcripcion en GPU (faster-whisper / CTranslate2 sobre CUDA).
+      - WHISPER_DEVICE=cuda
+      - WHISPER_COMPUTE=float16
+      - WHISPER_MODEL=large-v3-turbo
+      # Codificacion de video por hardware (NVENC); "auto" sondea y cae a x264
+      # si el equipo no puede, asi nunca rompe el render.
+      - FFMPEG_ENCODER=auto
+      # Exponer la GPU y sus capacidades (computo CUDA + NVENC de video).
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
