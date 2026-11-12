@@ -333,7 +333,7 @@ export default function MediaInput({ onProcess, isProcessing }) {
                             <div>
                                 <p className="eyebrow mb-1.5">min length (s)</p>
                                 <input
-                                    type="number" min="5" max="175" step="1"
+                                    type="number" min="5" max="595" step="1"
                                     value={clipMinSeconds}
                                     onChange={(e) => setClipMinSeconds(e.target.value)}
                                     placeholder="15"
@@ -343,7 +343,7 @@ export default function MediaInput({ onProcess, isProcessing }) {
                             <div>
                                 <p className="eyebrow mb-1.5">max length (s)</p>
                                 <input
-                                    type="number" min="10" max="180" step="1"
+                                    type="number" min="10" max="600" step="1"
                                     value={clipMaxSeconds}
                                     onChange={(e) => setClipMaxSeconds(e.target.value)}
                                     placeholder="60"

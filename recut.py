@@ -31,7 +31,7 @@ from ffmpeg_utils import (METADATA_SCRUB, QUALITY_FAST, audio_encode_args,
 # not for stitching feature films.
 MAX_SEGMENTS = 12
 MIN_SEGMENT_SECONDS = 0.5
-MAX_TOTAL_SECONDS = 180.0
+MAX_TOTAL_SECONDS = 600.0
 
 # Segments may start/end a hair outside the canonical range through float
 # round-tripping; treat them as inside.

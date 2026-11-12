@@ -5122,8 +5122,8 @@ async def process_endpoint(
         return int(val) if integer else val
 
     n_clips = _gen_control(target_clips, "target_clips", 1, 15, integer=True)
-    min_secs = _gen_control(clip_min_seconds, "clip_min_seconds", 5, 175)
-    max_secs = _gen_control(clip_max_seconds, "clip_max_seconds", 10, 180)
+    min_secs = _gen_control(clip_min_seconds, "clip_min_seconds", 5, 595)
+    max_secs = _gen_control(clip_max_seconds, "clip_max_seconds", 10, 600)
     if min_secs is not None and max_secs is not None and max_secs < min_secs + 5:
         raise HTTPException(status_code=400,
                             detail="clip_max_seconds must be at least 5s above clip_min_seconds")
